@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование авто</title>
+</head>
+<body>
+    <center><h3>Автомобили марки {{ brand.brand }}</h3></center>
+  <form action="{% url 'edit_auto' pk=brand.id %}" method="POST">
+        {% csrf_token %}
+        {{ form.management_form }}
+      <table border="1" align="center">
+          <tr>
+              <td>Модель</td>
+              <td>Объем двигателя (в литрах)</td>
+              <td>Мощность двигателя (лошадиных сил)</td>
+              <td>Тип коробки переключения передач</td>
+              <td>Год выпуска</td>
+              <td>Цвет</td>
+          </tr>
+          {% for Auto in form %}
+
+            {% if Auto.model.value != None %}
+                <tr>
+                    <td>{{ Auto.model }}</td>
+                    {% for hidden in Auto.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    {% for AutoCharacters in Auto.nested %}
+                        {% for hidden in AutoCharacters.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        <td>{{ AutoCharacters.engine_capacity }}</td>
+                        <td>{{ AutoCharacters.engine_power }}</td>
+                        <td>{{ AutoCharacters.gear_shift_box }}</td>
+                        <td>{{ AutoCharacters.release_year }}</td>
+                        <td>{{ AutoCharacters.color }}</td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
+            {% endfor %}
+      </table>
+    <input type="submit" value="Сохранить изменения" align="center"/>
+  </form>
+</body>
+</html>

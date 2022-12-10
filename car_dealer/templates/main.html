@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Выбор автомобиля</title>
+</head>
+<body>
+<center>
+    <h3>Выберите марку автомобиля:</h3><br>
+    <table>
+        {% for brand in brands %}
+            <tr>
+                <td>{{ brand }}</td>
+                <td><a href="{% url 'edit_auto' pk=brand.id %}">Редактировать</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</center>
+
+</body>
+</html>
